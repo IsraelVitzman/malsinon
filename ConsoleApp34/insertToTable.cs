@@ -1,65 +1,118 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
+using System;
 
 namespace ConsoleApp34
 {
-    internal class insertToTable
+    internal class InsertToTable
     {
         Database db = new Database();
-        public void insert(string Name ,string CodName ,string Text)
+
+        public void InsertNewPerson(string name, string secretCode)
         {
             string insertQuery = @"
-            INSERT INTO Users ( Name , CodName , Text) 
-            VALUES (@Name ,@CodName , Text)";
+            INSERT INTO People (Name, SecretCode) 
+            VALUES (@Name, @SecretCode)";
 
-            // לעשות טרי בהמשך..
-            MySqlConnection con = db.connection();
-
-            MySqlCommand cmd = new MySqlCommand(insertQuery, con);
-
-            cmd.Parameters.AddWithValue("@Name", Name);
-            cmd.Parameters.AddWithValue("@CodName", CodName);
-            cmd.Parameters.AddWithValue("@Text", Text);
-
-            cmd.ExecuteNonQuery();
-            Console.WriteLine("add to seccsfoly...");
+            try
+            {
+                MySqlConnection con = db.connection();
+                MySqlCommand cmd = new MySqlCommand(insertQuery, con);
+                cmd.Parameters.AddWithValue("@Name", name);
+                cmd.Parameters.AddWithValue("@SecretCode", secretCode);
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Person added successfully...");
+                db.close(con);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error inserting person: {ex.Message}");
+            }
         }
 
-        public void checkInTable(string  nameOrCode) 
+        public void InsertReport(int reporterId, int targetId, string reportText)
         {
-            string get = " SELECT * FROM People WHERE Name = @ input OR SecretCode = @ input";
+            string insertQuery = @"
+            INSERT INTO Reports (ReporterId, TargetId, ReportText) 
+            VALUES (@ReporterId, @TargetId, @ReportText)";
 
-            MySqlConnection con = db.connection();
-
-            MySqlCommand cmd = new MySqlCommand(get, con);
+            try
+            {
+                MySqlConnection con = db.connection();
+                MySqlCommand cmd = new MySqlCommand(insertQuery, con);
+                cmd.Parameters.AddWithValue("@ReporterId", reporterId);
+                cmd.Parameters.AddWithValue("@TargetId", targetId);
+                cmd.Parameters.AddWithValue("@ReportText", reportText);
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Report added successfully...");
+                db.close(con);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error inserting report: {ex.Message}");
+            }
+        }
 
         
-            
-            cmd.Parameters.AddWithValue("@input", nameOrCode);
+        public int CheckTarget(string target)
+        {
+            MySqlConnection con = db.connection();
+            string checkQuery = "SELECT Id FROM People WHERE Name = @input OR SecretCode = @input";
 
-            var result = cmd.ExecuteScalar();
-            // בדיקה האם קיים להוסיף בהמשך טרי ...
-            if (result != null)
-            {
-                return;
+            MySqlCommand checkCmd = new MySqlCommand(checkQuery, con);
+            checkCmd.Parameters.AddWithValue("@input", target);
 
-            }
-                    
+            object result = checkCmd.ExecuteScalar();
+            db.close(con);  
 
-                
-            
+            if (result != null && int.TryParse(result.ToString(), out int id))
+                return id;
+
+            return 0;
         }
 
-
-    }
-             
        
-    
+        public int CheckReporter(string reporter)
+        {
+            MySqlConnection con = db.connection();
+            string checkQuery = "SELECT Id FROM People WHERE Name = @input OR SecretCode = @input";
+
+            MySqlCommand checkCmd = new MySqlCommand(checkQuery, con);
+            checkCmd.Parameters.AddWithValue("@input", reporter);
+
+            object result = checkCmd.ExecuteScalar();
+            db.close(con);  
+
+            if (result != null && int.TryParse(result.ToString(), out int id))
+                return id;
+
+            return 0;
+        }
+
+        
+        public void insert(string reporterInput, string targetInput, string reportText)
+        {
+            if (CheckReporter(reporterInput) == 0)
+            {
+                Console.Write("Enter name: ");
+                string name = Console.ReadLine();
+                Console.Write("Enter secret code: ");
+                string code = Console.ReadLine();
+                InsertNewPerson(name, code);
+            }
+
+            if (CheckTarget(targetInput) == 0)
+            {
+                Console.Write("Enter name: ");
+                string name = Console.ReadLine();
+                Console.Write("Enter secret code: ");
+                string code = Console.ReadLine();
+                InsertNewPerson(name, code);
+            }
+
+            int reporterId = CheckReporter(reporterInput);  
+            int targetId = CheckTarget(targetInput);        
+
+            InsertReport(reporterId, targetId, reportText);
+        }
+    }
 }
