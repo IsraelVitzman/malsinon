@@ -1,0 +1,39 @@
+# Build artifacts
+bin/
+obj/
+
+# VS-specific folders
+.vs/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# JetBrains Rider and VS Code folders
+.idea/
+.vscode/
+
+# Auto-generated code
+Generated_Code/
+
+# NuGet packages
+packages/
+*.nupkg
+*.snupkg
+
+# Logs
+*.log
+
+# Databases
+*.mdf
+*.ldf
+
+# Misc
+*.cache
+*.dbmdl
+*.pdb
+
+# .NET-specific
+
