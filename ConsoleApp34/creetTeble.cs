@@ -19,7 +19,7 @@ namespace ConsoleApp34
                         Name NVARCHAR(100) NOT NULL,
                         SecretCode NVARCHAR(50) UNIQUE NOT NULL,
                         CreatedDate DATETIME DEFAULT GETDATE()
-             ) ;
+             );
 
                CREATE TABLE Reports (
                      Id INT PRIMARY KEY IDENTITY(1,1),

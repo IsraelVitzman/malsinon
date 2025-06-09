@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +31,35 @@ namespace ConsoleApp34
             cmd.ExecuteNonQuery();
             Console.WriteLine("add to seccsfoly...");
         }
+
+        public void checkInTable(string  nameOrCode) 
+        {
+            string get = " SELECT * FROM People WHERE Name = @ input OR SecretCode = @ input";
+
+            MySqlConnection con = db.connection();
+
+            MySqlCommand cmd = new MySqlCommand(get, con);
+
+        
+            
+            cmd.Parameters.AddWithValue("@input", nameOrCode);
+
+            var result = cmd.ExecuteScalar();
+            // בדיקה האם קיים להוסיף בהמשך טרי ...
+            if (result != null)
+            {
+                return;
+
+            }
+                    
+
+                
+            
+        }
+
+
+    }
              
        
-    }
+    
 }
