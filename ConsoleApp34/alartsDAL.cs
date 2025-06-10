@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using ConsoleApp34;
 using MySql.Data.MySqlClient;
 
-public class AlertHandler
+public class AlertsDAL
 {
     Database db = new Database();
     public MySqlDataReader newAlert()
