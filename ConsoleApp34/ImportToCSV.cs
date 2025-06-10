@@ -12,7 +12,8 @@ namespace ConsoleApp34
     {   
         Database db = new Database();
         InsertToTable insertToTable = new InsertToTable();
-
+        pupleDAL pupleDAL = new pupleDAL();
+        reportDAL reportDAL = new reportDAL();
         public void addCSV(string link)
         {
 
@@ -35,26 +36,26 @@ namespace ConsoleApp34
                 // יש כאן אולי מבנה מסורבל כי עדיף
                 // אולי שהוא יכניס שירות לתוך אנשים כי הרי אתה מביא כנראה קובץ חדש שהוא ודאי לא מעודכן שאנשים
 
-                if (insertToTable.CheckReporter(reporter) == 0)
+                if (pupleDAL.CheckReporter(reporter) == 0)
                 {
-                    Console.Write("Enter name:");
+                    Console.Write("Enter name reporter:");
                     string name = Console.ReadLine();
-                    Console.Write("Enter secret code:");
+                    Console.Write("Enter secret code reporter:");
                     string code = Console.ReadLine();
-                    insertToTable.InsertNewPerson(name, code);
+                    pupleDAL.InsertNewPerson(name, code);
                 }
 
-                if (insertToTable.CheckTarget(target) == 0)
+                if (pupleDAL.CheckTarget(target) == 0)
                 {
-                    Console.Write("Enter name:");
+                    Console.Write("Enter name terget:");
                     string name = Console.ReadLine();
-                    Console.Write("Enter secret code:");
+                    Console.Write("Enter secret code terget:");
                     string code = Console.ReadLine();
-                    insertToTable.InsertNewPerson(name, code);
+                    pupleDAL.InsertNewPerson(name, code);
                 }
 
-                int reporter1 = insertToTable.CheckReporter(reporter);
-                int target1 = insertToTable.CheckTarget(target);
+                int reporterId = pupleDAL.CheckReporter(reporter);
+                int targetId = pupleDAL.CheckTarget(target);
 
                 string insert= @"INSERT INTO reports (ReporterId, TargetId, report_text, report_time)
                                          VALUES (@reporter, @target, @text, @time)";
@@ -63,8 +64,8 @@ namespace ConsoleApp34
 
                 MySqlCommand cmd = new MySqlCommand(insert ,con);
 
-                cmd.Parameters.AddWithValue("@reporter", reporter1);
-                cmd.Parameters.AddWithValue("@target", target1);
+                cmd.Parameters.AddWithValue("@reporter", reporterId);
+                cmd.Parameters.AddWithValue("@target", targetId);
                 cmd.Parameters.AddWithValue("@text", reportText);
                 cmd.Parameters.AddWithValue("@time", DateTime.Parse(timestamp));
 
