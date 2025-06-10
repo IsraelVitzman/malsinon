@@ -10,32 +10,16 @@ namespace ConsoleApp34
     internal class ToRecruit
     {   
         Database db =new Database();
-        public void recruit(string input)
+        public void recruit()
         {
-            string qeerry = "";
-            if (input == "1")
-            {
-                qeerry = "SELECT ReporterId, COUNT(*) AS ReportCount, AVG(CHAR_LENGTH(ReportText)) AS AvgLength" +
+            
+            
+              string  qeerry = "SELECT ReporterId, COUNT(*) AS ReportCount, AVG(CHAR_LENGTH(ReportText)) AS AvgLength" +
                 "            FROM Reports" +
                 "            GROUP BY ReporterId" +
                 "            HAVING ReportCount >= 10 AND AvgLength >= 100";
 
-            }
-            else if (input == "2")
-            {
-                qeerry = "SELECT r1.TargetId, r1.SubmissionTime" +
-                    "    FROM Reports r1" +
-                    "    JOIN Reports r2 ON r1.TargetId = r2.TargetId" +
-                    "    AND r2.SubmissionTime BETWEEN r1.SubmissionTime AND DATE_ADD(r1.SubmissionTime, INTERVAL 15 MINUTE)" +
-                    "    GROUP BY r1.TargetId, r1.SubmissionTime" +
-                    "    HAVING COUNT(r2.Id) >= 3;";
-
-            }
-            else
-            {
-                Console.WriteLine("invalid error");
-                return;
-            }
+            
            
             try
             {
@@ -45,9 +29,11 @@ namespace ConsoleApp34
                 MySqlCommand command = new MySqlCommand(qeerry,connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
+
                 while (reader.Read()) 
-                { 
-                    Console.WriteLine(reader);
+                {
+                    Console.WriteLine($"ReporterId: {reader["ReporterId"]}, Reports: {reader["ReportCount"]}, AvgLen: {reader["AvgLength"]}");
+
                 }
 
 

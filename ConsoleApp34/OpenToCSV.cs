@@ -11,7 +11,7 @@ namespace ConsoleApp34
 {
     internal class OpenToCSV
     {
-         DateTime now = DateTime.Now;
+        DateTime time = DateTime.Now;
         public void newCsv()
         {
             string path = @"C:\Users\משתמש\Downloads\intel_reports.csv";
@@ -24,11 +24,12 @@ namespace ConsoleApp34
         {
             string path = @"C:\Users\משתמש\Downloads\intel_reports.csv";
             StreamWriter writer = new StreamWriter(path);
-            writer.WriteLine(reporterId, targetId ,reportText,  DateTime.Now);
-            
+            writer.WriteLine($"{reporterId},{targetId},{reportText},{time}");
+
+            writer.Close();
 
 
         }
-          
+
     }
 }
