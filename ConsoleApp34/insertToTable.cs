@@ -7,117 +7,37 @@ namespace ConsoleApp34
     {
         Database db = new Database();
 
-        public void InsertNewPerson(string name, string secretCode)
-        {
-            string insertQuery = @"
-            INSERT INTO People (Name, SecretCode) 
-            VALUES (@Name, @SecretCode)";
-
-            try
-            {
-                MySqlConnection con = db.connection();
-                MySqlCommand cmd = new MySqlCommand(insertQuery, con);
-
-                cmd.Parameters.AddWithValue("@Name", name);
-                cmd.Parameters.AddWithValue("@SecretCode", secretCode);
-
-                cmd.ExecuteNonQuery();
-
-                Console.WriteLine("Person added successfully...");
-                db.close(con);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error inserting person: {ex.Message}");
-            }
-        }
-
-        public void InsertReport(int reporterId, int targetId, string reportText)
-        {
-            string insertQuery = @"
-            INSERT INTO Reports (ReporterId, TargetId, ReportText) 
-            VALUES (@ReporterId, @TargetId, @ReportText)";
-
-            try
-            {
-                MySqlConnection con = db.connection();
-                MySqlCommand cmd = new MySqlCommand(insertQuery, con);
-                cmd.Parameters.AddWithValue("@ReporterId", reporterId);
-                cmd.Parameters.AddWithValue("@TargetId", targetId);
-                cmd.Parameters.AddWithValue("@ReportText", reportText);
-
-                cmd.ExecuteNonQuery();
-
-                Console.WriteLine("Report added successfully...");
-                db.close(con);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error inserting report: {ex.Message}");
-            }
-        }
-
         
-        public int CheckTarget(string target)
-        {
-            MySqlConnection con = db.connection();
-            string checkQuery = "SELECT Id FROM People WHERE Name = @input OR SecretCode = @input";
-
-            MySqlCommand checkCmd = new MySqlCommand(checkQuery, con);
-            checkCmd.Parameters.AddWithValue("@input", target);
-
-            object result = checkCmd.ExecuteScalar();
-            db.close(con);  
-
-            if (result != null && int.TryParse(result.ToString(), out int id))
-                return id;
-
-            return 0;
-        }
-
+        pupleDAL pupleDAL = new pupleDAL();
+        reportDAL reportDAL = new reportDAL();
         
-        public int CheckReporter(string reporter)
-        {
-            MySqlConnection con = db.connection();
-            string checkQuery = "SELECT Id FROM People WHERE Name = @input OR SecretCode = @input";
-
-            MySqlCommand checkCmd = new MySqlCommand(checkQuery, con);
-            checkCmd.Parameters.AddWithValue("@input", reporter);
-
-            object result = checkCmd.ExecuteScalar();
-            db.close(con);  
-
-            if (result != null && int.TryParse(result.ToString(), out int id))
-                return id;
-
-            return 0;
-        }
+       
 
         
         public void insert(string reporterInput, string targetInput, string reportText)
         {
-            if (CheckReporter(reporterInput) == 0)
+            if (pupleDAL.CheckReporter(reporterInput) == 0)
             {
-                Console.Write("Enter name:");
+                Console.Write("Enter name reporter:");
                 string name = Console.ReadLine();
-                Console.Write("Enter secret code:");
+                Console.Write("Enter secret code reporter:");
                 string code = Console.ReadLine();
-                InsertNewPerson(name, code);
+                pupleDAL.InsertNewPerson(name, code);
             }
 
-            if (CheckTarget(targetInput) == 0)
+            if (pupleDAL.CheckTarget(targetInput) == 0)
             {
-                Console.Write("Enter name:");
+                Console.Write("Enter name terget:");
                 string name = Console.ReadLine();
-                Console.Write("Enter secret code:");
+                Console.Write("Enter secret code terget:");
                 string code = Console.ReadLine();
-                InsertNewPerson(name, code);
+                pupleDAL.InsertNewPerson(name, code);
             }
 
-            int reporterId = CheckReporter(reporterInput);  
-            int targetId = CheckTarget(targetInput);        
+            int reporterId = pupleDAL.CheckReporter(reporterInput);  
+            int targetId = pupleDAL.CheckTarget(targetInput);
 
-            InsertReport(reporterId, targetId, reportText);
+            reportDAL.InsertReport(reporterId, targetId, reportText);
         }
     }
 }

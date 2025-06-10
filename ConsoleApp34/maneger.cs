@@ -10,8 +10,10 @@ public class ConsoleMenu
         ToRecruit toRecruit = new ToRecruit();
         InsertToTable insertToTable = new InsertToTable();
         AlertHandler alertHandler = new AlertHandler();
-        getName getName = new getName();    
-        
+        getName getName = new getName();
+        OpenToCSV openToCSV = new OpenToCSV();
+
+
         createTable.CreateNewTable();
 
         while (true)
@@ -22,6 +24,7 @@ public class ConsoleMenu
             Console.WriteLine("3. הפעל ניתוח מגייסים");
             Console.WriteLine("4. הפעל ניתוח מטרות מסוכנות");
             Console.WriteLine("5. מחזיר קוד לפי שם ");
+            Console.WriteLine("6. צור קובץ CSV במחשב ");
             Console.WriteLine("0. יציאה");
             Console.Write("בחר פעולה: ");
 
@@ -60,7 +63,9 @@ public class ConsoleMenu
                     string name1 = Console.ReadLine();
                     getName.name(name1);
                     break;
-                    
+                case "6":
+                    openToCSV.addToCSV();
+                    break;
                 case "0":
                     return;
 
