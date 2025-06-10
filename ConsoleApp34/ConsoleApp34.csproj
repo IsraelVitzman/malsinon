@@ -97,8 +97,11 @@
   <ItemGroup>
     <Compile Include="creetTeble.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="ImportToCSV.cs" />
     <Compile Include="insertToTable.cs" />
+    <Compile Include="OpenToCSV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToRecruit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

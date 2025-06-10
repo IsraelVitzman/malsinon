@@ -17,9 +17,12 @@ namespace ConsoleApp34
             {
                 MySqlConnection con = db.connection();
                 MySqlCommand cmd = new MySqlCommand(insertQuery, con);
+
                 cmd.Parameters.AddWithValue("@Name", name);
                 cmd.Parameters.AddWithValue("@SecretCode", secretCode);
+
                 cmd.ExecuteNonQuery();
+
                 Console.WriteLine("Person added successfully...");
                 db.close(con);
             }
@@ -42,7 +45,9 @@ namespace ConsoleApp34
                 cmd.Parameters.AddWithValue("@ReporterId", reporterId);
                 cmd.Parameters.AddWithValue("@TargetId", targetId);
                 cmd.Parameters.AddWithValue("@ReportText", reportText);
+
                 cmd.ExecuteNonQuery();
+
                 Console.WriteLine("Report added successfully...");
                 db.close(con);
             }
@@ -93,18 +98,18 @@ namespace ConsoleApp34
         {
             if (CheckReporter(reporterInput) == 0)
             {
-                Console.Write("Enter name: ");
+                Console.Write("Enter name:");
                 string name = Console.ReadLine();
-                Console.Write("Enter secret code: ");
+                Console.Write("Enter secret code:");
                 string code = Console.ReadLine();
                 InsertNewPerson(name, code);
             }
 
             if (CheckTarget(targetInput) == 0)
             {
-                Console.Write("Enter name: ");
+                Console.Write("Enter name:");
                 string name = Console.ReadLine();
-                Console.Write("Enter secret code: ");
+                Console.Write("Enter secret code:");
                 string code = Console.ReadLine();
                 InsertNewPerson(name, code);
             }
