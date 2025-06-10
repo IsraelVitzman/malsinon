@@ -8,6 +8,8 @@ public class ConsoleMenu
         ImportToCSV importToCSV = new ImportToCSV();
         ToRecruit toRecruit = new ToRecruit();
         InsertToTable insertToTable = new InsertToTable();
+        AlertHandler alertHandler = new AlertHandler();
+        getName getName = new getName();    
         while (true)
         {
             Console.WriteLine("\n--- Malshinon System ---");
@@ -15,6 +17,7 @@ public class ConsoleMenu
             Console.WriteLine("2. יבא קובץ CSV");
             Console.WriteLine("3. הפעל ניתוח מגייסים");
             Console.WriteLine("4. הפעל ניתוח מטרות מסוכנות");
+            Console.WriteLine("5. מחזיר קוד לפי שם ");
             Console.WriteLine("0. יציאה");
             Console.Write("בחר פעולה: ");
 
@@ -40,17 +43,23 @@ public class ConsoleMenu
                     break;
 
                 case "3":
-                    string input1 = "1";
-                    toRecruit.recruit(input1);
+                    toRecruit.recruit();
                     break;
+
 
                 case "4":
-                    string input2 = "2";
-                    toRecruit.recruit(input2);
+                    alertHandler.RunAlertAnalysis();
                     break;
 
+                case "5":
+                    Console.Write("Enter name:");
+                    string name1 = Console.ReadLine();
+                    getName.name(name1);
+                    break;
+                    
                 case "0":
                     return;
+
                 default:
                     Console.WriteLine("בחירה לא תקינה.");
                     break;
