@@ -7,10 +7,13 @@ public class ConsoleMenu
     static void Main(string[] args)
      {
         ImportToCSV importToCSV = new ImportToCSV();
-        ToRecruit toRecruit = new ToRecruit();
+        
         InsertToTable insertToTable = new InsertToTable();
-        AlertHandler alertHandler = new AlertHandler();
-        getName getName = new getName();
+
+        reportDAL reportDAL =new reportDAL ();
+        pupleDAL pupleDAL =new pupleDAL();
+        AlertsDAL alertsDAL =new AlertsDAL();
+
         OpenToCSV openToCSV = new OpenToCSV();
 
 
@@ -50,22 +53,20 @@ public class ConsoleMenu
                     break;
 
                 case "3":
-                    toRecruit.recruit();
+                    reportDAL.recruit();
                     break;
 
 
                 case "4":
-                    alertHandler.RunAlertAnalysis();
+                    alertsDAL.RunAlertAnalysis();
                     break;
 
                 case "5":
                     Console.Write("Enter name:");
                     string name1 = Console.ReadLine();
-                    getName.name(name1);
+                    pupleDAL.getCodeName(name1);
                     break;
-                case "6":
-                    openToCSV.addToCSV();
-                    break;
+                
                 case "0":
                     return;
 

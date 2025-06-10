@@ -6,8 +6,6 @@ namespace ConsoleApp34
     internal class InsertToTable
     {
         Database db = new Database();
-
-        
         pupleDAL pupleDAL = new pupleDAL();
         reportDAL reportDAL = new reportDAL();
         
