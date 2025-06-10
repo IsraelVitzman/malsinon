@@ -23,12 +23,12 @@ namespace ConsoleApp34
             }
             else if (input == "2")
             {
-                qeerry = "SELECT r1.TargetId, r1.Timestamp" +
-                    "            FROM Reports r1" +
-                    "            JOIN Reports r2 ON r1.TargetId = r2.TargetId " +
-                    "            AND r2.Timestamp BETWEEN r1.Timestamp AND DATE_ADD(r1.Timestamp, INTERVAL 15 MINUTE)" +
-                    "            GROUP BY r1.TargetId, r1.Timestamp" +
-                    "            HAVING COUNT(r2.ReportId) >= 3;";
+                qeerry = "SELECT r1.TargetId, r1.SubmissionTime" +
+                    "    FROM Reports r1" +
+                    "    JOIN Reports r2 ON r1.TargetId = r2.TargetId" +
+                    "    AND r2.SubmissionTime BETWEEN r1.SubmissionTime AND DATE_ADD(r1.SubmissionTime, INTERVAL 15 MINUTE)" +
+                    "    GROUP BY r1.TargetId, r1.SubmissionTime" +
+                    "    HAVING COUNT(r2.Id) >= 3;";
 
             }
             else
