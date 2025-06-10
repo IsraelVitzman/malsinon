@@ -17,20 +17,19 @@ namespace ConsoleApp34
             {
                 MySqlConnection con = db.connection();
 
-                string qerry = "SELECT Id FROM People WHERE Name = @input";
+                string qerry = "SELECT Name, SecretCode FROM People WHERE Name = @input";
 
-                con.Open();
+                
 
                 MySqlCommand cmd = new MySqlCommand(qerry, con);
+                cmd.Parameters.AddWithValue("input", name);
 
                 MySqlDataReader reader = cmd.ExecuteReader();
+
                 while (reader.Read())
                 {
-                    int reporterId = reader.GetInt32("ReporterId");
-                    int reportCount = reader.GetInt32("ReportCount");
-                    double avgLength = reader.GetDouble("AvgTextLength");
-
-                    Console.WriteLine($"Reporter ID: {reporterId}, Reports: {reportCount}, Avg. Length: {avgLength:F1} chars");
+                    Console.WriteLine( reader["Name"] );
+                    Console.WriteLine( reader["SecretCode"] );
                 }
 
 

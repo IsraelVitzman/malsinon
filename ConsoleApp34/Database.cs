@@ -11,7 +11,7 @@ namespace ConsoleApp34
     {
         public MySqlConnection connection()
         {
-            string strConnection = "Server=localhost;Database=yourdb;Uid=username;Pwd=password;";
+            string strConnection = "server=localhost;user=root;database=mal;port=3306;password=;";
             MySqlConnection con = new MySqlConnection(strConnection);
             con.Open();
             return con;

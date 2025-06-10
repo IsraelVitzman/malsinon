@@ -75,7 +75,7 @@ namespace ConsoleApp34
             return 0;
         }
 
-       
+        
         public int CheckReporter(string reporter)
         {
             MySqlConnection con = db.connection();

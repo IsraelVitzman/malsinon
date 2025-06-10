@@ -14,22 +14,26 @@ using System;
                         Id INT PRIMARY KEY AUTO_INCREMENT,
                         Name VARCHAR(100) NOT NULL,
                         SecretCode VARCHAR(50) NOT NULL,
-                       
+                  
                         CreatedDate DATETIME DEFAULT CURRENT_TIMESTAMP
                )";
 
-        string newTable2 = @"      CREATE TABLE IF NOT EXISTS Reports (
+        string newTable2 = @"      
+              CREATE TABLE IF NOT EXISTS Reports (
                      Id INT PRIMARY KEY AUTO_INCREMENT,
+
                      ReporterId INT NOT NULL,
                      TargetId INT NOT NULL,
                      ReportText TEXT NOT NULL,
+
                      SubmissionTime DATETIME DEFAULT CURRENT_TIMESTAMP,
 
                      FOREIGN KEY (ReporterId) REFERENCES People(Id),
                      FOREIGN KEY (TargetId) REFERENCES People(Id)
                )";
 
-        string newTable3 = @"       CREATE TABLE Alerts (
+        string newTable3 = @"      
+              CREATE TABLE Alerts (
                      AlertId INT AUTO_INCREMENT PRIMARY KEY,
                      TargetId INT NOT NULL,
                      AlertType ENUM('THRESHOLD', 'BURST') NOT NULL,

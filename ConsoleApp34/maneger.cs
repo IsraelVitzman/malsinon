@@ -3,13 +3,17 @@ using System;
 
 public class ConsoleMenu
 {
-    public static void ShowMainMenu()
-    {
+    static CreateTable createTable = new CreateTable();
+    static void Main(string[] args)
+     {
         ImportToCSV importToCSV = new ImportToCSV();
         ToRecruit toRecruit = new ToRecruit();
         InsertToTable insertToTable = new InsertToTable();
         AlertHandler alertHandler = new AlertHandler();
         getName getName = new getName();    
+        
+        createTable.CreateNewTable();
+
         while (true)
         {
             Console.WriteLine("\n--- Malshinon System ---");
@@ -24,13 +28,13 @@ public class ConsoleMenu
             switch (Console.ReadLine())
             {
                 case "1":
-                    Console.Write("Enter name:");
+                    Console.Write("Enter report:");
                     string name = Console.ReadLine();
 
-                    Console.Write("Enter secret code:");
+                    Console.Write("Enter target:");
                     string code = Console.ReadLine();
 
-                    Console.Write("Enter secret code:");
+                    Console.Write("Enter text:");
                     string text = Console.ReadLine();
 
                     insertToTable.insert(name ,code ,text);
@@ -65,5 +69,6 @@ public class ConsoleMenu
                     break;
             }
         }
+
     }
 }

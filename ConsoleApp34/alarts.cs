@@ -16,7 +16,7 @@ public class AlertHandler
                     "    HAVING COUNT(r2.Id) >= 3;";
 
         MySqlConnection connection = db.connection();
-        connection.Open();
+        
 
         MySqlCommand command = new MySqlCommand(qeerry, connection);
 
@@ -31,7 +31,7 @@ public class AlertHandler
 
             MySqlConnection conn = db.connection();
         
-            conn.Open();
+           
 
 
             string sql = "INSERT INTO Alerts (TargetId, AlertType) VALUES (@TargetId, @AlertType)";

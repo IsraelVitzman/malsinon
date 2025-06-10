@@ -19,7 +19,7 @@ namespace ConsoleApp34
 
 
         }
-        
+        // צריך לבדוק האם הוא יצור שוב חדש או שהוא בודק האם קיים או לא דבר שני לטפל בשגיאות ...
         public void addToCSV(string reporterId, string targetId ,string reportText)
         {
             string path = @"C:\Users\משתמש\Downloads\intel_reports.csv";

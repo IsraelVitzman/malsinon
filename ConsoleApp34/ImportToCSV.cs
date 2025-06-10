@@ -29,10 +29,11 @@ namespace ConsoleApp34
 
                 string reporter = parts[0].Trim();
                 string target = parts[1].Trim();
-                string reportText = parts[2].Trim().Trim('"');
+                string reportText = parts[2].Trim();
                 string timestamp = parts[3].Trim();
 
-               
+                // יש כאן אולי מבנה מסורבל כי עדיף
+                // אולי שהוא יכניס שירות לתוך אנשים כי הרי אתה מביא כנראה קובץ חדש שהוא ודאי לא מעודכן שאנשים
 
                 if (insertToTable.CheckReporter(reporter) == 0)
                 {
