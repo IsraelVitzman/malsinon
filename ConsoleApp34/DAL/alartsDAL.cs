@@ -51,8 +51,8 @@ public class AlertsDAL
     {
         using (MySqlDataReader reader = newAlert(code))
         {
-            while (reader.Read())
-            {
+                reader.Read();
+            
                 int targetId = reader.GetInt32("TargetId");
                 DateTime time = reader.GetDateTime("SubmissionTime");
 
@@ -63,9 +63,9 @@ public class AlertsDAL
                 InsertAlert(targetId, alertType, reason);
 
                 Console.WriteLine($"התראה נוספה: מטרה {targetId} נחשבת למסוכנת (Burst)");
-            }
+            
 
-            reader.Close();
+                reader.Close();
         }
     }
 
