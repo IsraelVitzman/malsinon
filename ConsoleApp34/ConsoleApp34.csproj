@@ -95,16 +95,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="alartsDAL.cs" />
-    <Compile Include="creetTeble.cs" />
-    <Compile Include="Database.cs" />
-    <Compile Include="ImportToCSV.cs" />
-    <Compile Include="insertToTable.cs" />
-    <Compile Include="maneger.cs" />
-    <Compile Include="OpenToCSV.cs" />
+    <Compile Include="DAL\alartsDAL.cs" />
+    <Compile Include="DAL\creetTeble.cs" />
+    <Compile Include="DAL\Database.cs" />
+    <Compile Include="CSV\ImportToCSV.cs" />
+    <Compile Include="DAL\insertToTable.cs" />
+    <Compile Include="maneger\maneger.cs" />
+    <Compile Include="CSV\OpenToCSV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="pupleDAL.cs" />
-    <Compile Include="reportDAL.cs" />
+    <Compile Include="DAL\pupleDAL.cs" />
+    <Compile Include="DAL\reportDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

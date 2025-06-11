@@ -25,9 +25,8 @@ public class ConsoleMenu
             Console.WriteLine("1. הוסף דיווח");
             Console.WriteLine("2. יבא קובץ CSV");
             Console.WriteLine("3. הפעל ניתוח מגייסים");
-            Console.WriteLine("4. הפעל ניתוח מטרות מסוכנות");
-            Console.WriteLine("5. מחזיר קוד לפי שם ");
-            Console.WriteLine("6. צור קובץ CSV במחשב ");
+            Console.WriteLine("4. מחזיר קוד לפי שם ");
+            
             Console.WriteLine("0. יציאה");
             Console.Write("בחר פעולה: ");
 
@@ -48,7 +47,7 @@ public class ConsoleMenu
 
                 case "2":
                     Console.Write("הכנס נתיב לקובץ: ");
-                    string path = Console.ReadLine();
+                    string path = @"C:\Users\משתמש\Downloads\sample_import.csv";
                     importToCSV.addCSV(path);
                     break;
 
@@ -58,10 +57,6 @@ public class ConsoleMenu
 
 
                 case "4":
-                    alertsDAL.RunAlertAnalysis();
-                    break;
-
-                case "5":
                     Console.Write("Enter name:");
                     string name1 = Console.ReadLine();
                     pupleDAL.getCodeName(name1);

@@ -35,39 +35,33 @@ namespace ConsoleApp34
             }
         }
 
-        public int CheckTarget(string target)
+        
+
+
+        public int CheckInPuple(string nameOrCode)
         {
-            MySqlConnection con = db.connection();
-            string checkQuery = "SELECT Id FROM People WHERE Name = @input OR SecretCode = @input";
+            try
+            {
+                MySqlConnection con = db.connection();
+                string checkQuery = "SELECT Id FROM People WHERE Name = @input OR SecretCode = @input";
 
-            MySqlCommand checkCmd = new MySqlCommand(checkQuery, con);
-            checkCmd.Parameters.AddWithValue("@input", target);
+                MySqlCommand checkCmd = new MySqlCommand(checkQuery, con);
+                checkCmd.Parameters.AddWithValue("@input", nameOrCode);
 
-            object result = checkCmd.ExecuteScalar();
-            db.close(con);
+                object result = checkCmd.ExecuteScalar();
+                db.close(con);
 
-            if (result != null && int.TryParse(result.ToString(), out int id))
-                return id;
+                if (result != null && int.TryParse(result.ToString(), out int id))
+                    return id;
 
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             return 0;
-        }
 
-
-        public int CheckReporter(string reporter)
-        {
-            MySqlConnection con = db.connection();
-            string checkQuery = "SELECT Id FROM People WHERE Name = @input OR SecretCode = @input";
-
-            MySqlCommand checkCmd = new MySqlCommand(checkQuery, con);
-            checkCmd.Parameters.AddWithValue("@input", reporter);
-
-            object result = checkCmd.ExecuteScalar();
-            db.close(con);
-
-            if (result != null && int.TryParse(result.ToString(), out int id))
-                return id;
-
-            return 0;
         }
 
         public void getCodeName(string name)

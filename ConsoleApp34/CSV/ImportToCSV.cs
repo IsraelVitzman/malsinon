@@ -14,13 +14,15 @@ namespace ConsoleApp34
         InsertToTable insertToTable = new InsertToTable();
         pupleDAL pupleDAL = new pupleDAL();
         reportDAL reportDAL = new reportDAL();
+
+        Random random = new Random();
         public void addCSV(string link)
         {
 
-            MySqlConnection con= db.connection();
-            con.Open();
+            MySqlConnection con = db.connection();
 
-         
+
+
             var reader = new StreamReader(link);
 
             while (!reader.EndOfStream)
@@ -33,52 +35,60 @@ namespace ConsoleApp34
                 string reportText = parts[2].Trim();
                 string timestamp = parts[3].Trim();
 
-                // יש כאן אולי מבנה מסורבל כי עדיף
-                // אולי שהוא יכניס שירות לתוך אנשים כי הרי אתה מביא כנראה קובץ חדש שהוא ודאי לא מעודכן שאנשים
 
-                if (pupleDAL.CheckReporter(reporter) == 0)
+                if (pupleDAL.CheckInPuple(reporter) == 0)
                 {
-                    Console.Write("Enter name reporter:");
-                    string name = Console.ReadLine();
-                    Console.Write("Enter secret code reporter:");
-                    string code = Console.ReadLine();
+
+                    string name = reporter;
+                    string code = GenerateRandomDigits(5);
+                    pupleDAL.InsertNewPerson(name, code);
+
+                }
+
+                if (pupleDAL.CheckInPuple(target) == 0)
+                {
+                   
+                    string name = target;
+                    string code = GenerateRandomDigits(5);
                     pupleDAL.InsertNewPerson(name, code);
                 }
 
-                if (pupleDAL.CheckTarget(target) == 0)
-                {
-                    Console.Write("Enter name terget:");
-                    string name = Console.ReadLine();
-                    Console.Write("Enter secret code terget:");
-                    string code = Console.ReadLine();
-                    pupleDAL.InsertNewPerson(name, code);
-                }
+                int reporterId = pupleDAL.CheckInPuple(reporter);
+                int targetId = pupleDAL.CheckInPuple(target);
 
-                int reporterId = pupleDAL.CheckReporter(reporter);
-                int targetId = pupleDAL.CheckTarget(target);
-
-                string insert= @"INSERT INTO reports (ReporterId, TargetId, report_text, report_time)
+                string insert = @"INSERT INTO reports (ReporterId, TargetId, ReportText, SubmissionTime)
                                          VALUES (@reporter, @target, @text, @time)";
 
 
 
-                MySqlCommand cmd = new MySqlCommand(insert ,con);
+                MySqlCommand cmd = new MySqlCommand(insert, con);
 
                 cmd.Parameters.AddWithValue("@reporter", reporterId);
                 cmd.Parameters.AddWithValue("@target", targetId);
                 cmd.Parameters.AddWithValue("@text", reportText);
-                cmd.Parameters.AddWithValue("@time", DateTime.Parse(timestamp));
+                cmd.Parameters.AddWithValue("@time", timestamp);
 
 
                 cmd.ExecuteNonQuery();
-                
+
             }
             db.close(con);
-
-
-
-
-
         }
+        public string GenerateRandomDigits(int length)
+            {
+                Random rand = new Random();
+                string digits = "";
+
+                for (int i = 0; i < length; i++)
+                {
+                    digits += rand.Next(0, 10).ToString(); // מספר רנדומלי בין 0 ל־9
+                }
+
+                return digits;
+        }
+
+
+
+        
     }
 }

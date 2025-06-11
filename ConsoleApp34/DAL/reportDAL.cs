@@ -20,6 +20,7 @@ namespace ConsoleApp34
             {
                 MySqlConnection con = db.connection();
                 MySqlCommand cmd = new MySqlCommand(insertQuery, con);
+
                 cmd.Parameters.AddWithValue("@ReporterId", reporterId);
                 cmd.Parameters.AddWithValue("@TargetId", targetId);
                 cmd.Parameters.AddWithValue("@ReportText", reportText);
@@ -28,6 +29,7 @@ namespace ConsoleApp34
 
                 Console.WriteLine("Report added successfully...");
                 db.close(con);
+
             }
             catch (Exception ex)
             {
@@ -48,7 +50,7 @@ namespace ConsoleApp34
             {
 
                 MySqlConnection connection = db.connection();
-                connection.Open();
+                
                 MySqlCommand command = new MySqlCommand(qeerry, connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
@@ -59,7 +61,7 @@ namespace ConsoleApp34
 
                 }
 
-
+                db.close(connection);
             }
             catch (Exception ex)
             {

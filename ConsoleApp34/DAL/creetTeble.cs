@@ -34,11 +34,14 @@ using System;
 
         string newTable3 = @"      
               CREATE TABLE Alerts (
-                     AlertId INT AUTO_INCREMENT PRIMARY KEY,
+                     Id INT AUTO_INCREMENT PRIMARY KEY, 
+
                      TargetId INT NOT NULL,
-                     AlertType ENUM('THRESHOLD', 'BURST') NOT NULL,
-                   
-    
+                     AlertType TEXT NOT NULL,
+                     Reason TEXT NOT NULL,
+
+                     SubmissionTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+
                      FOREIGN KEY (TargetId) REFERENCES People(Id)
                 );
                 ";

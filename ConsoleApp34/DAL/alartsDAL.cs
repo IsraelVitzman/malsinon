@@ -6,19 +6,21 @@ using MySql.Data.MySqlClient;
 public class AlertsDAL
 {
     Database db = new Database();
-    public MySqlDataReader newAlert()
+    public MySqlDataReader newAlert(int code)
     {
         string qeerry = "SELECT r1.TargetId, r1.SubmissionTime" +
-                    "    FROM Reports r1" +
-                    "    JOIN Reports r2 ON r1.TargetId = r2.TargetId" +
-                    "    AND r2.SubmissionTime BETWEEN r1.SubmissionTime AND DATE_ADD(r1.SubmissionTime, INTERVAL 15 MINUTE)" +
-                    "    GROUP BY r1.TargetId, r1.SubmissionTime" +
-                    "    HAVING COUNT(r2.Id) >= 3;";
+            "            FROM Reports r1" +
+            "            JOIN Reports r2 ON r1.TargetId = r2.TargetId" +
+            "            AND r2.SubmissionTime BETWEEN r1.SubmissionTime AND DATE_ADD(r1.SubmissionTime, INTERVAL 15 MINUTE)" +
+            "            WHERE r1.TargetId = @input" +
+            "            GROUP BY r1.TargetId, r1.SubmissionTime" +
+            "            HAVING COUNT(r2.Id) >= 3;";
 
         MySqlConnection connection = db.connection();
         
 
         MySqlCommand command = new MySqlCommand(qeerry, connection);
+        command.Parameters.AddWithValue("@input", code);
 
         MySqlDataReader reader = command.ExecuteReader();
 
@@ -30,24 +32,24 @@ public class AlertsDAL
             
 
             MySqlConnection conn = db.connection();
-        
-           
+          
 
-
-            string sql = "INSERT INTO Alerts (TargetId, AlertType) VALUES (@TargetId, @AlertType)";
+            string sql = "INSERT INTO Alerts (TargetId, AlertType ,Reason) VALUES (@TargetId, @AlertType ,@Reason)";
 
             MySqlCommand cmd = new MySqlCommand(sql, conn);
 
             cmd.Parameters.AddWithValue("@TargetId", targetId);
             cmd.Parameters.AddWithValue("@AlertType", alertType);
+            cmd.Parameters.AddWithValue("@Reason", reason);
             
 
             cmd.ExecuteNonQuery();
         
     }
-    public void RunAlertAnalysis()
+
+    public void RunAlertAnalysis(int code)
     {
-        using (MySqlDataReader reader = newAlert())
+        using (MySqlDataReader reader = newAlert(code))
         {
             while (reader.Read())
             {
