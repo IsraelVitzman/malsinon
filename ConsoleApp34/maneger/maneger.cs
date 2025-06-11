@@ -14,7 +14,7 @@ public class ConsoleMenu
         pupleDAL pupleDAL =new pupleDAL();
         AlertsDAL alertsDAL =new AlertsDAL();
 
-        OpenToCSV openToCSV = new OpenToCSV();
+      
 
 
         createTable.CreateNewTable();

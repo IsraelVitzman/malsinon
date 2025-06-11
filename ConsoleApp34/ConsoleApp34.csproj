@@ -101,7 +101,6 @@
     <Compile Include="CSV\ImportToCSV.cs" />
     <Compile Include="DAL\insertToTable.cs" />
     <Compile Include="maneger\maneger.cs" />
-    <Compile Include="CSV\OpenToCSV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DAL\pupleDAL.cs" />
     <Compile Include="DAL\reportDAL.cs" />

@@ -79,6 +79,10 @@ namespace ConsoleApp34
 
                 MySqlDataReader reader = cmd.ExecuteReader();
 
+                if (reader == null)
+                {
+                    Console.WriteLine("not found...");
+                }
                 while (reader.Read())
                 {
                     Console.WriteLine(reader["Name"]);

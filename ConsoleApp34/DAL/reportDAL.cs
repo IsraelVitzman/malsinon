@@ -54,6 +54,10 @@ namespace ConsoleApp34
                 MySqlCommand command = new MySqlCommand(qeerry, connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
+                if (!reader.Read())
+                {
+                    Console.WriteLine("not found...");
+                }
 
                 while (reader.Read())
                 {
