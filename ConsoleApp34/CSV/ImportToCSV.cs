@@ -81,7 +81,7 @@ namespace ConsoleApp34
 
                 for (int i = 0; i < length; i++)
                 {
-                    digits += rand.Next(0, 10).ToString(); // מספר רנדומלי בין 0 ל־9
+                    digits += rand.Next(0, 10).ToString(); 
                 }
 
                 return digits;

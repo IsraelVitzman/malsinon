@@ -25,8 +25,7 @@ public class ConsoleMenu
             Console.WriteLine("1. הוסף דיווח");
             Console.WriteLine("2. יבא קובץ CSV");
             Console.WriteLine("3. הפעל ניתוח מגייסים");
-            Console.WriteLine("4. מחזיר קוד לפי שם ");
-            
+            Console.WriteLine("4. מחזיר קוד לפי שם ");     
             Console.WriteLine("0. יציאה");
             Console.Write("בחר פעולה: ");
 
@@ -46,7 +45,8 @@ public class ConsoleMenu
                     break;
 
                 case "2":
-                    Console.Write("הכנס נתיב לקובץ: ");
+                    Console.Write(" הכנס נתיב לקובץ: ");
+                    Console.WriteLine("טוען!");
                     string path = @"C:\Users\משתמש\Downloads\sample_import.csv";
                     importToCSV.addCSV(path);
                     break;

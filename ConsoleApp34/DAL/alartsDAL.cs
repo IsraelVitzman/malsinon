@@ -8,13 +8,21 @@ public class AlertsDAL
     Database db = new Database();
     public MySqlDataReader newAlert(int code)
     {
-        string qeerry = "SELECT r1.TargetId, r1.SubmissionTime" +
-            "            FROM Reports r1" +
-            "            JOIN Reports r2 ON r1.TargetId = r2.TargetId" +
-            "            AND r2.SubmissionTime BETWEEN r1.SubmissionTime AND DATE_ADD(r1.SubmissionTime, INTERVAL 15 MINUTE)" +
-            "            WHERE r1.TargetId = @input" +
-            "            GROUP BY r1.TargetId, r1.SubmissionTime" +
-            "            HAVING COUNT(r2.Id) >= 3;";
+        string qeerry = "SELECT  TargetId,   " +
+            "                    MIN(SubmissionTime) AS FirstTime, " +
+            "                    MAX(SubmissionTime) AS LastTime," +
+            "                    TIMESTAMPDIFF(MINUTE, MIN(SubmissionTime), " +
+            "                    MAX(SubmissionTime)) AS MinutesDiff," +
+            "                    COUNT(*) AS ReportsCount" +
+            "                    FROM ( " +
+            "                         SELECT SubmissionTime, TargetId" +
+            "                         FROM Reports" +
+            "                         WHERE TargetId = @input" +
+            "                         ORDER BY SubmissionTime DESC" +
+            "                         LIMIT 3) AS LastThree" +
+            "                         GROUP BY TargetId" +
+            "                         HAVING ReportsCount = 3 AND MinutesDiff <= 15;";
+
 
         MySqlConnection connection = db.connection();
         
@@ -51,18 +59,27 @@ public class AlertsDAL
     {
         using (MySqlDataReader reader = newAlert(code))
         {
-                reader.Read();
-            
+            if (reader.Read())
+            {
+
                 int targetId = reader.GetInt32("TargetId");
-                DateTime time = reader.GetDateTime("SubmissionTime");
+                DateTime time = reader.GetDateTime("FirstTime");
 
                 string alertType = "Burst";
                 string reason = $"3 דיווחים על מטרה תוך פחות מ־15 דקות. זמן התחלה: {time}";
 
-                
+
                 InsertAlert(targetId, alertType, reason);
 
                 Console.WriteLine($"התראה נוספה: מטרה {targetId} נחשבת למסוכנת (Burst)");
+
+
+            }
+            else
+            {
+                Console.WriteLine("---------------");
+            }
+
             
 
                 reader.Close();
